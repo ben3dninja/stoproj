@@ -90,3 +90,29 @@ impl Plane {
         (self.n * (self.o - r.o) / (r.d * self.n)) * r.d + r.o
     }
 }
+
+pub struct Face {
+    indices: Vec<u32>,
+}
+
+impl From<&str> for Face {
+    fn from(s: &str) -> Self {
+        let s = if s.starts_with('f') {
+            s.strip_prefix("f ").unwrap().to_string()
+        } else {
+            s.to_string()
+        };
+        Face::from_indices(
+            s.split(' ')
+                .map(|x| x.split('/'))
+                .map(|mut x| x.next().unwrap().parse::<u32>().unwrap())
+                .collect::<Vec<u32>>(),
+        )
+    }
+}
+
+impl Face {
+    fn from_indices(indices: Vec<u32>) -> Self {
+        Face { indices }
+    }
+}
