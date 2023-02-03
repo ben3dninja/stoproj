@@ -1,6 +1,6 @@
 use std::ops::{Add, Mul, Sub};
 
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Debug, PartialEq)]
 pub struct Vec3 {
     x: f32,
     y: f32,
@@ -8,8 +8,16 @@ pub struct Vec3 {
 }
 
 impl Vec3 {
-    pub fn new(x: f32, y: f32, z: f32) -> Self {
+    pub const ZERO: Vec3 = Vec3::new(0., 0., 0.);
+    pub const X: Vec3 = Vec3::new(1., 0., 0.);
+    pub const Y: Vec3 = Vec3::new(0., 1., 0.);
+    pub const Z: Vec3 = Vec3::new(0., 0., 1.);
+
+    pub const fn new(x: f32, y: f32, z: f32) -> Self {
         Vec3 { x, y, z }
+    }
+    pub fn norm(&self) -> f32 {
+        (self.x * self.x + self.y * self.y + self.z * self.z).sqrt()
     }
 }
 
@@ -65,54 +73,12 @@ impl From<&str> for Vec3 {
     }
 }
 
-pub struct Ray {
-    d: Vec3,
-    o: Vec3,
-}
+#[cfg(test)]
+mod tests {
+    use super::*;
 
-impl Ray {
-    pub fn new(d: Vec3, o: Vec3) -> Self {
-        Ray { d, o }
-    }
-
-    pub fn from_points(o: Vec3, p: Vec3) -> Self {
-        Ray { d: p - o, o }
-    }
-}
-
-pub struct Plane {
-    n: Vec3,
-    o: Vec3,
-}
-
-impl Plane {
-    pub fn intersect_ray(&self, r: Ray) -> Vec3 {
-        (self.n * (self.o - r.o) / (r.d * self.n)) * r.d + r.o
-    }
-}
-
-pub struct Face {
-    indices: Vec<u32>,
-}
-
-impl From<&str> for Face {
-    fn from(s: &str) -> Self {
-        let s = if s.starts_with('f') {
-            s.strip_prefix("f ").unwrap().to_string()
-        } else {
-            s.to_string()
-        };
-        Face::from_indices(
-            s.split(' ')
-                .map(|x| x.split('/'))
-                .map(|mut x| x.next().unwrap().parse::<u32>().unwrap())
-                .collect::<Vec<u32>>(),
-        )
-    }
-}
-
-impl Face {
-    fn from_indices(indices: Vec<u32>) -> Self {
-        Face { indices }
+    #[test]
+    fn from_string() {
+        assert_eq!(Vec3::from("v 1.0 2.3 -4.0"), Vec3::new(1., 2.3, -4.))
     }
 }

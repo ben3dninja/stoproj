@@ -17,3 +17,18 @@ impl Projector {
             .collect()
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn projection() {
+        let proj = Projector {
+            points: vec![Vec3::new(1., 0., 1.), Vec3::new(-1., 0., 1.)],
+            origin: 2. * Vec3::Z,
+            plane: Plane::new(Vec3::ZERO, Vec3::Z),
+        };
+        assert_eq!(proj.project(), vec![2. * Vec3::X, -2. * Vec3::X])
+    }
+}
