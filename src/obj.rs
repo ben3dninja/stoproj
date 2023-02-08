@@ -2,8 +2,8 @@ use crate::geometry::{Face, Vec3};
 
 #[derive(Debug, PartialEq)]
 pub struct Obj {
-    points: Vec<Vec3>,
-    faces: Vec<Face>,
+    pub points: Vec<Vec3>,
+    pub faces: Vec<Face>,
 }
 
 impl Obj {

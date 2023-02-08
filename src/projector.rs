@@ -1,13 +1,13 @@
 use crate::geometry::{Plane, Ray, Vec3};
 
 pub struct Projector {
-    points: Vec<Vec3>,
-    origin: Vec3,
-    plane: Plane,
+    pub points: Vec<Vec3>,
+    pub origin: Vec3,
+    pub plane: Plane,
 }
 
 impl Projector {
-    fn project(&self) -> Vec<Vec3> {
+    pub fn project(&self) -> Vec<Vec3> {
         self.points
             .iter()
             .map(|p| {

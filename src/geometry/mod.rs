@@ -28,7 +28,7 @@ impl Plane {
 
 #[derive(Debug, PartialEq)]
 pub struct Face {
-    pub indices: Vec<u32>,
+    pub indices: Vec<usize>,
 }
 
 impl From<&str> for Face {
@@ -41,14 +41,14 @@ impl From<&str> for Face {
         Face::from_indices(
             s.split(' ')
                 .map(|x| x.split('/'))
-                .map(|mut x| x.next().unwrap().parse::<u32>().unwrap())
-                .collect::<Vec<u32>>(),
+                .map(|mut x| x.next().unwrap().parse::<usize>().unwrap())
+                .collect::<Vec<usize>>(),
         )
     }
 }
 
 impl Face {
-    fn from_indices(indices: Vec<u32>) -> Self {
+    pub fn from_indices(indices: Vec<usize>) -> Self {
         Face { indices }
     }
 }
