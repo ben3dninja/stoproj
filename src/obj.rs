@@ -34,7 +34,7 @@ mod tests {
                 "v 1.0 0.0 0.0\n\
             v 0.0 1.0 0.0\n\
             v 0.0 0.0 1.0\n\
-            f 0 1 2"
+            f 1 2 3"
             ),
             Obj {
                 points: vec![Vec3::X, Vec3::Y, Vec3::Z],

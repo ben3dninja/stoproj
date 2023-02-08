@@ -1,4 +1,7 @@
-use std::ops::{Add, Mul, Sub};
+use std::{
+    fmt::Display,
+    ops::{Add, Mul, Sub},
+};
 
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub struct Vec3 {
@@ -70,6 +73,12 @@ impl From<&str> for Vec3 {
             .map(|x| x.parse::<f32>().unwrap())
             .collect::<Vec<f32>>()
             .into()
+    }
+}
+
+impl Display for Vec3 {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "v {} {} {}", self.x, self.y, self.z)
     }
 }
 

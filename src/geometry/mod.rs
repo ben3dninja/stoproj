@@ -1,4 +1,6 @@
 mod vec3;
+use std::fmt::Display;
+
 pub use vec3::Vec3;
 
 pub struct Ray {
@@ -41,7 +43,7 @@ impl From<&str> for Face {
         Face::from_indices(
             s.split(' ')
                 .map(|x| x.split('/'))
-                .map(|mut x| x.next().unwrap().parse::<usize>().unwrap())
+                .map(|mut x| x.next().unwrap().parse::<usize>().unwrap() - 1)
                 .collect::<Vec<usize>>(),
         )
     }
@@ -50,6 +52,20 @@ impl From<&str> for Face {
 impl Face {
     pub fn from_indices(indices: Vec<usize>) -> Self {
         Face { indices }
+    }
+}
+
+impl Display for Face {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(
+            f,
+            "f {}",
+            self.indices
+                .iter()
+                .map(|v| (v + 1).to_string())
+                .collect::<Vec<String>>()
+                .join(" ")
+        )
     }
 }
 
